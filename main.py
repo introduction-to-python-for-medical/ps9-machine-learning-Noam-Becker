@@ -7,10 +7,10 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 df = pd.read_csv('/content/parkinsons.csv')
-sns.pairplot(df)
+#sns.pairplot(df)
 plt.show()
 input_feature1 = 'MDVP:Fo(Hz)'  
-input_feature2 = 'MDVP:Shimmer'  
+input_feature2 = 'D2'  
 output_feature = 'status' 
 print(f"Selected input features: {input_feature1}, {input_feature2}")
 print(f"Selected output feature: {output_feature}")
@@ -23,9 +23,11 @@ print(scaled_df.head())
 from sklearn.model_selection import train_test_split
 X = scaled_df
 y = df[output_feature]
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42) 
-from sklearn.linear_model import LogisticRegression
-model = LogisticRegression()
-model.fit(X_train, y_train)
-accuracy = model.score(X_val, y_val)
-print(f"Accuracy is: {accuracy*100} %")
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+svm_model = SVC(kernel='linear', C=1) 
+svm_model.fit(X_train, y_train)
+y_pred = svm_model.predict(X_val)
+accuracy = accuracy_score(y_val, y_pred)
+print(f"Accuracy of SVM model: {accuracy}")
