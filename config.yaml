@@ -1,2 +1,2 @@
-path: "new_model.joblib"
+path: "svm.joblib"
 features: ['MDVP:Fo(Hz)', 'D2']
